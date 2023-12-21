@@ -46,7 +46,7 @@ function Header({handleInputChange}) {
       <div className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300">
         <div className="navTop flex flex-col sm:flex-row items-center justify-between">
           <div className="navItem">
-            <h1 className="text-[1.5em] font-semibold">.Sneakwear</h1>
+            <h1 className="text-[1.5em] font-semibold">Sneakwear</h1>
           </div>
           <div className="navItem py-1 sm:py-0">
             <div className="flex items-center bg-[#808080] sm:py-2 px-2 sm:px-4 rounded-lg">
