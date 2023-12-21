@@ -1,0 +1,49 @@
+.priceProgressBar{
+    animation: progressBar 2s ease-in-out infinite alternate;
+}
+
+@keyframes progressBar{
+    from {width: 0%;}
+    to {width: 100%;}
+}
+
+.slider{
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 85%)
+}
+
+.sliderWrapper, .productWrapper{
+    transition: all 0.6s ease-in-out;
+}
+
+.product{
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    background-image: url("https://t4.ftcdn.net/jpg/02/42/98/73/360_F_242987371_xIZwfi5XNNgM8yof2Gy9Bxh3brXLt50g.jpg");
+    background-position:bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width:640px) {
+    .productDesc1{
+      display: none;
+    }
+    .productDesc2{
+      display: inline-block;
+    }
+}
+
+@media screen and (min-width:640px) {
+    .productDesc2{
+      display: none;
+    }
+    .productDesc1{
+      display: inline-block;
+    }
+    
+}
+
+.payment{
+    -webkit-box-shadow: 0px 0px 27px -3px rgba(0,0,0,0.87); 
+  box-shadow: 0px 0px 27px -3px rgba(0,0,0,0.87);
+}

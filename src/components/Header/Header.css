@@ -1,0 +1,10 @@
+#progressBarText:hover #progressBar{
+    background-color: gray;
+    height: 2px;
+    animation: progressBar 1s linear infinite;
+}
+
+@keyframes progressBar{
+    from {width: 0%;}
+    to {width: 100%;}
+  }

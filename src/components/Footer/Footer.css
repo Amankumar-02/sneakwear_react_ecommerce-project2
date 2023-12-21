@@ -1,0 +1,19 @@
+.fListItem:hover #footerProgressBar{
+    /* background-color: gray; */
+    height: 2px;
+    animation: progressBar 1s linear infinite;
+    margin-bottom: 2px;
+}
+
+@keyframes progressBar{
+    from {width: 0%;}
+    to {width: 100%;}
+}
+
+.fIcons{
+    transition: all 0.8s ease-in-out;
+}
+  
+.fMenuInput::placeholder{
+    font-size: 12px;
+}
