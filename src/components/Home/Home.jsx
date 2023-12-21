@@ -180,12 +180,12 @@ function Home({
 
             <div className="payment absolute top-[-10%] left-[0] right-0 bottom-0 m-auto py-[6px] sm:py-[10px] px-[20px] sm:px-[40px] w-[180px] sm:w-[400px] h-[210px] sm:h-[430px] bg-white flex flex-col rounded-xl" style={buyPanel}>
             <h1 className="payTitle text-gray-500 text-xs sm:text-[20px] font-semibold sm:mt-2">Personal Information</h1>
-            <label htmlFor="infoName" className='text-[10px] sm:text-[14px] sm:mt-2'>Name and Surname</label>
-            <input type="text" id="infoName" placeholder='John Doe' className='payInput px-[6px] sm:p-[6px] text-[8px] sm:text-[16px] border-b-2 border-gray-300 pb-0 outline-none'/>
-            <label htmlFor="infoNumb" className='text-[10px] sm:text-[14px] sm:mt-2'>Phone Number</label>
-            <input type="number" id='infoNumb' pattern="\d*" maxLength="10" placeholder='+1 234 5678' className='payInput px-[6px] sm:p-[6px] text-[8px] sm:text-[16px] border-b-2 border-gray-300 pb-0 outline-none'/>
-            <label htmlFor="infoAdd" className='text-[10px] sm:text-[14px] sm:mt-2'>Address</label>
-            <input type="text" id='infoAdd' placeholder='Elton St 21-22-145' className='payInput px-[6px] sm:p-[6px] text-[8px] sm:text-[16px] border-b-2 border-gray-300 pb-0 outline-none'/>
+            <label htmlFor={`infoName${index}`} className='text-[10px] sm:text-[14px] sm:mt-2'>Name and Surname</label>
+            <input type="text" id={`infoName${index}`} placeholder='John Doe' className='payInput px-[6px] sm:p-[6px] text-[8px] sm:text-[16px] border-b-2 border-gray-300 pb-0 outline-none'/>
+            <label htmlFor={`infoNumb${index}`} className='text-[10px] sm:text-[14px] sm:mt-2'>Phone Number</label>
+            <input type="number" id={`infoNumb${index}`} pattern="\d*" maxLength="10" placeholder='+1 234 5678' className='payInput px-[6px] sm:p-[6px] text-[8px] sm:text-[16px] border-b-2 border-gray-300 pb-0 outline-none'/>
+            <label htmlFor={`infoAddress${index}`} className='text-[10px] sm:text-[14px] sm:mt-2'>Address</label>
+            <input type="text" id={`infoAddress${index}`} placeholder='Elton St 21-22-145' className='payInput px-[6px] sm:p-[6px] text-[8px] sm:text-[16px] border-b-2 border-gray-300 pb-0 outline-none'/>
             <h1 className="payTitle text-gray-500 text-xs sm:text-[20px] mt-1 sm:mt-2 font-semibold">Card Information</h1>
             <div className="cardIcons flex">
               <img src={visa} alt="" className='cardIcon w-[15%] me-2 cursor-pointer'/>
