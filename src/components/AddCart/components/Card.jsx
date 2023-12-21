@@ -2,7 +2,6 @@ import {fetchCartData} from '../../../features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 
 function Card({
-  keyID,
   img,
   title,
   reviews,
@@ -13,7 +12,7 @@ function Card({
 
   return (
     <>
-    <section key={keyID} className="card my-[5px] mx-[2px] sm:m-[20px] border-2 border-[#ededed] p-[8px] sm:p-[20px] flex flex-col justify-end items-center w-[140px] sm:w-auto">
+    <section className="card my-[5px] mx-[2px] sm:m-[20px] border-2 border-[#ededed] p-[8px] sm:p-[20px] flex flex-col justify-end items-center w-[140px] sm:w-auto">
         <img src={img} alt={title} className='card-img w-[100%] sm:w-[13rem] mb-2 sm:mb-[1rem]'/>
         <div className="card-details">
           <h3 className="card-title mb-1 sm:mb-[1rem] text-sm sm:text-[1.17em] font-bold">{title}</h3>

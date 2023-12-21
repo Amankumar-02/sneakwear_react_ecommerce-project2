@@ -51,7 +51,7 @@ function App() {
 
     return filteredProducts.map(({img, title, reviews, prevPrice, newPrice}, index)=>(
       <Card
-      keyID = {index}
+      key = {index}
       img = {img}
       title = {title}
       reviews = {reviews}
