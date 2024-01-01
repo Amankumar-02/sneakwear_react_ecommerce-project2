@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'remixicon/fonts/remixicon.css';
 import './Header.css'
 import {updateStyle} from '../../features/slider/sliderSlice'
@@ -27,19 +27,27 @@ function Header({handleInputChange}) {
 
   const [noItem, setNoItem] = useState(1);
 
-  let listCart = []
+  let [listCart, setListCart] = useState([]);
+
   function addItems(dataBase, storeData){
     let newList = dataBase.filter((data)=>data.title === storeData);
       if(newList.map((data)=>data.title === storeData)){
         return newList[0]
       }
+      return null;
   }
 
-  let result =  addItems(dataBase, storeData);
-  if(result){
-    listCart.push(result)
-  }
-
+  let result = addItems(dataBase, storeData);
+  useEffect(() => {
+    if (result) {
+      setListCart((prev) => [...prev, result]);
+    }
+  }, [result]);
+  // if(result){
+  //   setListCart((prev)=>[...prev, result])
+  //   listCart.push(result)
+  // }
+  console.log(listCart)
 
   return (
     <>
