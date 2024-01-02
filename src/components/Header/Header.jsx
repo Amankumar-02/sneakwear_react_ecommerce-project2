@@ -4,17 +4,10 @@ import './Header.css'
 import {updateStyle} from '../../features/slider/sliderSlice'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {dataBase} from '../../dataBase';
+import {menuItemsName, dataBase, productData} from '../../dataBase';
 
 
 function Header({handleInputChange}) {
-  const menuItemsName = [
-    {name:"Air Force",},
-    {name:"Jordan",},
-    {name:"Blazer",},
-    {name:"Crater",},
-    {name:"Hippie",},
-  ]
   let dispatch  = useDispatch();
   const slider = (index)=>{
     dispatch(updateStyle(`translateX(-${index*100}vw)`))
@@ -22,10 +15,9 @@ function Header({handleInputChange}) {
 
   // new data
   const storeData = useSelector(state=>state.cart.cart);
+  console.log(storeData)
 
-  const [openCart, setOpenCart] = useState({left:"100%", transition: '0.5s'});
-
-  const [noItem, setNoItem] = useState(1);
+  const [openCart, setOpenCart] = useState({left:"100%", transition:'0.5s'});
 
   let [listCart, setListCart] = useState([]);
 
@@ -44,7 +36,6 @@ function Header({handleInputChange}) {
       setListCart((prev) => [...prev, result]);
     }
   }, [result]);
-  console.log(listCart)
 
   const increaseItem = (title)=>{
       setListCart((prev)=>prev.map((data)=>data.title === title? {...data, noItems: data.noItems+1, newPrice: +data.newPrice + +data.newPrice2 } : data))
@@ -61,7 +52,9 @@ function Header({handleInputChange}) {
       <div className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300">
         <div className="navTop flex flex-col sm:flex-row items-center justify-between">
           <div className="navItem">
+            <a href="#">
             <h1 className="text-[1.5em] font-semibold">Sneakwear</h1>
+            </a>
           </div>
           <div className="navItem py-1 sm:py-0">
             <div className="flex items-center bg-[#808080] sm:py-2 px-2 sm:px-4 rounded-lg">

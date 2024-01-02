@@ -30,7 +30,7 @@ function Card({
               </div>
               <div className="bag"><i className="ri-shopping-bag-fill text-[#535353]"></i></div>
             </section>
-            <button className="border border-black p-1 mt-2 w-full hover:border-red-500 hover:text-red-500" value={title} onClick={(e)=>{dispatch(fetchCartData(e.target.value))}}>Add to Cart</button>
+            <button className="border border-black p-1 mt-2 w-full hover:border-red-500 hover:text-red-500" onClick={()=>{dispatch(fetchCartData(title))}}>Add to Cart</button>
         </div>
       </section>
     </>
