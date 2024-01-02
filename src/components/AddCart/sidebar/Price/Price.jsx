@@ -6,7 +6,7 @@ function Price({handleRadioChange}) {
   return (
     <>
       <div>
-      <h2 className="sidebar-title text-md sm:text-[1.5em] font-bold mt-[20px] mb-[8px] sm:my-[20px]">Price</h2>
+      <h2 className="sidebar-title text-md sm:text-[1.5em] font-bold mt-[20px] mb-[8px] sm:my-[20px] ps-3 sm:p-0">Price</h2>
       <div className="">
           {priceData.map((data, index)=>(
             <div key={index}>

@@ -6,8 +6,8 @@ function Colors({handleRadioChange}) {
   return (
     <>
       <div>
-        <h2 className="sidebar-title text-md sm:text-[1.5em] font-bold mt-[20px] mb-[8px] sm:my-[20px]">Colors</h2>
-        <div className="">
+        <h2 className="sidebar-title text-md sm:text-[1.5em] font-bold mt-[20px] mb-[8px] sm:my-[20px]  ps-3 sm:p-0">Colors</h2>
+        <div className="ps-5 sm:p-0">
           {colorData.map((data, index)=>(
             <div key={index}>
               <label htmlFor={data.id} className="sidebar-label-container block relative text-xs sm:text-[16px] ps-[20px] sm:ps-[35px] mb-1 sm:mb-[12px] cursor-pointer">

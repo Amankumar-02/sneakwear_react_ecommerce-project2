@@ -1,0 +1,11 @@
+.sideBar-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+  
+.sideBar-scroll::-webkit-scrollbar-track {
+    background: rgb(206, 205, 205);
+}
+  
+.sideBar-scroll::-webkit-scrollbar-thumb {
+    background-color: #ef4444;
+}
