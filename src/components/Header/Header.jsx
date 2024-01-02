@@ -38,16 +38,23 @@ function Header({handleInputChange}) {
   }
 
   let result = addItems(dataBase, storeData);
+
   useEffect(() => {
     if (result) {
       setListCart((prev) => [...prev, result]);
     }
   }, [result]);
-  // if(result){
-  //   setListCart((prev)=>[...prev, result])
-  //   listCart.push(result)
-  // }
   console.log(listCart)
+
+  const increaseItem = (title)=>{
+      setListCart((prev)=>prev.map((data)=>data.title === title? {...data, noItems: data.noItems+1, newPrice: +data.newPrice + +data.newPrice2 } : data))
+  }
+  const decreaseItem = (title)=>{
+      setListCart((prev)=>prev.map((data)=>data.title === title? {...data, noItems: Math.max(data.noItems - 1, 1), newPrice: Math.max(+data.newPrice - data.newPrice2, data.newPrice2) } : data))
+  }
+  const deleteItem = (title)=>{
+    setListCart((prev)=>prev.filter((data)=>data.title != title));
+  }
 
   return (
     <>
@@ -67,67 +74,128 @@ function Header({handleInputChange}) {
               <i className="ri-search-line"></i>
             </div>
           </div>
-          <div className='flex items-center'>
-          <div className="profile-container">
-          <a href="#" className="me-3 text-lg"><i className="ri-heart-line"></i></a>
-          <a href="#cartItems" className="me-3 text-lg openCart" onClick={()=>{setOpenCart({left:"calc(100% - 300px", transition: '0.5s'})}}><i className="ri-shopping-cart-2-line relative"><span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4">1</span></i></a>
-          <a href="#" className="me-3 text-lg"><i className="ri-user-add-fill"></i></a>
-          </div>
-          <div id="progressBarText" className="navItem">
-            <span
-              id="navTop"
-              className="limitedOffer text-[12px] sm:text-[1.3em] cursor-pointer"
-            >
-              Limited Offer!
-            </span>
-            <div id="progressBar"></div>
-          </div>
+          <div className="flex items-center">
+            <div className="profile-container">
+              <a href="#" className="me-3 text-lg">
+                <i className="ri-heart-line"></i>
+              </a>
+              <a
+                href="#cartItems"
+                className="me-3 text-lg openCart"
+                onClick={() => {
+                  setOpenCart({
+                    left: "calc(100% - 300px",
+                    transition: "0.5s",
+                  });
+                }}
+              >
+                <i className="ri-shopping-cart-2-line relative">
+                  <span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4">
+                    {listCart.length}
+                  </span>
+                </i>
+              </a>
+              <a href="#" className="me-3 text-lg">
+                <i className="ri-user-add-fill"></i>
+              </a>
+            </div>
+            <div id="progressBarText" className="navItem">
+              <span
+                id="navTop"
+                className="limitedOffer text-[12px] sm:text-[1.3em] cursor-pointer"
+              >
+                Limited Offer!
+              </span>
+              <div id="progressBar"></div>
+            </div>
           </div>
         </div>
         <div className="navBottom flex items-center justify-center flex-wrap gap-3 sm:gap-[6px] mt-2 sm:mt-[20px]">
           {menuItemsName.map((data, index) => (
-            <h3 key={index} className="menuItem uppercase text-sm sm:text-[1rem] sm:w-[130px] text-center cursor-pointer text-gray-300 hover:text-[1.1rem] hover:sm:text-[1.2rem]" onClick={()=>slider(index)}>
+            <h3
+              key={index}
+              className="menuItem uppercase text-sm sm:text-[1rem] sm:w-[130px] text-center cursor-pointer text-gray-300 hover:text-[1.1rem] hover:sm:text-[1.2rem]"
+              onClick={() => slider(index)}
+            >
               {data.name}
             </h3>
           ))}
         </div>
       </div>
 
-
-      <div className="cart fixed top-0 w-[300px] bg-[#dadada] border-s border-red-500 h-[100vh] z-[51]" style={openCart}>
-      <h1 className="text-red-500 font-bold text-2xl px-[20px] h-[50px] flex items-center justify-center">Cart</h1>
-        <div className="list mx-1">
-          {listCart.map((data, index)=>(
-            <section key={index} className="card bg-white rounded-lg my-[5px] mx-[2px] sm:my-[10px] sm:mx-[10px] border-2 border-[#ededed] p-[8px] sm:p-[20px] flex flex-col justify-end items-center">
-              <img src={data.img} alt={data.title} className='card-img w-[80%] sm:w-[13rem] mb-2 sm:mb-[1rem]'/>
-              <div className="card-details my-2">
-                <h3 className="card-title sm:mb-[1rem] text-lg sm:text-[1.17em] font-bold w-[100%] sm:w-auto ">{data.title}</h3>
-                  <section className="card-price flex justify-between items-center">
-                    <div className="price text-[15px] sm:text-[16px]">
-                      <p className='inline-block ms-2'> ${data.newPrice}</p> 
-                    </div>
-                    <div className="bag"><i className="ri-shopping-bag-fill text-[#535353]"></i></div>
-                  </section>
-                  <div className="flex mt-2">
-                  <button className="bg-gray-200 leading-3 px-2 rounded-xl hover:bg-gray-300" 
-                  onClick={()=>{setNoItem((prev)=>prev+1)}}
-                  >+</button>
-                  <p className="mx-4">{noItem}</p>
-                  <button className="bg-gray-200 leading-3 px-2 rounded-xl text-2xl hover:bg-gray-300" 
-                  onClick={()=>{if(noItem>1){setNoItem((prev)=>prev-1)}}}
-                  >-</button>
+      <div
+        className="cart fixed top-0 w-[300px] bg-[#dadada] border-s border-red-500 h-[100vh] z-[51]"
+        style={openCart}
+      >
+        <h1 className="text-red-500 font-bold text-2xl px-[20px] h-[50px] flex items-center justify-center">
+          Cart
+        </h1>
+        <div className="list mx-1 whitespace-nowrap overflow-x-hidden overflow-y-auto scroll-smooth">
+          {listCart.map((data, index) => (
+            <section
+              key={index}
+              className="card bg-white rounded-lg my-[5px] mx-[2px] sm:my-[10px] sm:mx-[10px] border-2 border-[#ededed] p-[8px] sm:p-[20px] flex flex-col justify-end items-center"
+            >
+              <img
+                src={data.img}
+                alt={data.title}
+                className="card-img w-[80%] sm:w-[13rem] mb-2 sm:mb-[1rem]"
+              />
+              <div className="card-details my-2 w-[90%]">
+                <h3 className="card-title sm:mb-[1rem] text-lg sm:text-[1.17em] font-bold w-[100%] sm:w-auto ">
+                  {data.title}
+                </h3>
+                <section className="card-price flex justify-between items-center">
+                  <div className="price text-[15px] sm:text-[16px]">
+                    <p className="inline-block ms-2"> ${data.newPrice}</p>
+                  </div>
+                  <div className="bag">
+                    <i className="ri-shopping-bag-fill text-[#535353]"></i>
+                  </div>
+                </section>
+                <div className="flex justify-between mt-2">
+                  <div className="flex">
+                    <button
+                      className="bg-gray-200 leading-3 px-2 rounded-xl hover:bg-gray-300"
+                      onClick={() => {
+                        increaseItem(data.title);
+                      }}
+                    >
+                      +
+                    </button>
+                    <p className="mx-4">{data.noItems}</p>
+                    <button
+                      className="bg-gray-200 leading-3 px-2 rounded-xl text-2xl hover:bg-gray-300"
+                      // onClick={()=>{if(noItem>1){setNoItem((prev)=>prev-1)}}}
+                      onClick={() => {
+                        decreaseItem(data.title);
+                      }}
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div>
+                    <button className='bg-red-500 py-1 px-2 text-xs text-white rounded-lg' onClick={()=>{deleteItem(data.title)}}>Delete</button>
                   </div>
                 </div>
+              </div>
             </section>
           ))}
         </div>
-      <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
-        <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer">
-          $ {listCart[0]?.newPrice * noItem}
+        <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
+          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer">
+            {listCart.reduce((total, data) => total + (+data.newPrice), 0)} $
           </div>
-        <div className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer"  onClick={()=>{setOpenCart({left:"100%", transition: '0.5s'})}}>Close</div>
+          <div
+            className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer"
+            onClick={() => {
+              setOpenCart({ left: "100%", transition: "0.5s" });
+            }}
+          >
+            Close
+          </div>
+        </div>
       </div>
-    </div>
     </>
   );
 }

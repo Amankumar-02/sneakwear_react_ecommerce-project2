@@ -8,3 +8,9 @@
     from {width: 0%;}
     to {width: 100%;}
   }
+.list{
+    height: calc(100% - 123px);
+}
+.list::-webkit-scrollbar{
+    display: none;
+}
