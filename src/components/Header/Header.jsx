@@ -4,7 +4,7 @@ import './Header.css'
 import {updateStyle} from '../../features/slider/sliderSlice'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {menuItemsName, dataBase, productData} from '../../dataBase';
+import {menuItemsName, dataBase, productDataCopy} from '../../dataBase';
 
 
 function Header({handleInputChange}) {
@@ -15,12 +15,13 @@ function Header({handleInputChange}) {
 
   // new data
   const storeData = useSelector(state=>state.cart.cart);
-  console.log(storeData)
+  // console.log(storeData)
 
   const [openCart, setOpenCart] = useState({left:"100%", transition:'0.5s'});
 
   let [listCart, setListCart] = useState([]);
 
+  // this func is from addCart ==> Cart
   function addItems(dataBase, storeData){
     let newList = dataBase.filter((data)=>data.title === storeData);
       if(newList.map((data)=>data.title === storeData)){
@@ -28,14 +29,29 @@ function Header({handleInputChange}) {
       }
       return null;
   }
-
+  // this func is from addCart ==> Cart Execution
   let result = addItems(dataBase, storeData);
 
+  // this func is from product list from home comp.
+  function addItems2(productDataCopy, storeData){
+    let newList = productDataCopy.filter((data)=>data.title === storeData);
+      if(newList.map((data)=>data.title === storeData)){
+        return newList[0]
+      }
+      return null;
+  }
+  // this func is from product list from home comp. Execution
+  let result2 = addItems2(productDataCopy, storeData);
+
+  // Here, merge the cart items
   useEffect(() => {
     if (result) {
       setListCart((prev) => [...prev, result]);
     }
-  }, [result]);
+    if (result2) {
+      setListCart((prev) => [...prev, result2]);
+    }
+  }, [result, result2]);
 
   const increaseItem = (title)=>{
       setListCart((prev)=>prev.map((data)=>data.title === title? {...data, noItems: data.noItems+1, newPrice: +data.newPrice + +data.newPrice2 } : data))
@@ -73,7 +89,7 @@ function Header({handleInputChange}) {
                 <i className="ri-heart-line"></i>
               </a>
               <a
-                href="#cartItems"
+                // href="#cartItems"
                 className="me-3 text-lg openCart"
                 onClick={() => {
                   setOpenCart({

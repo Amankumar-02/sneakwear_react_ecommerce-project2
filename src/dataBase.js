@@ -376,103 +376,78 @@ const dataBase = [
   },
 ];
 
-const productData = [
+const productDataCopy = [
   {
-    title: "Nike Pegasus",
-    price: "$149",
-    desc: "High-performance running shoe designed for speed and comfort, featuring responsive cushioning and a breathable mesh upper.",
-    mobDesc:"Speed and comfort in a high-performance runner with responsive cushioning.",
-    displayImg:"https://cdn.leonardo.ai/users/8d611489-0d5f-4751-a2ec-062c4b782ea8/generations/f6237ddb-744b-4255-8f04-bf20a0ac1bd2/variations/Default_nike_air_jordan_shoes_3_f6237ddb-744b-4255-8f04-bf20a0ac1bd2_0.png",
-    item1: {
       img: "https://cdn.leonardo.ai/users/8d611489-0d5f-4751-a2ec-062c4b782ea8/generations/f6237ddb-744b-4255-8f04-bf20a0ac1bd2/variations/Default_nike_air_jordan_shoes_3_f6237ddb-744b-4255-8f04-bf20a0ac1bd2_0.png",
-      color: "#D7262A",
-      title:"Nike Pegasus",
-      desc: "High-performance running shoe designed for speed and comfort, featuring responsive cushioning and a breathable mesh upper.",
-    },
-    item2: {
+      title: "Nike Pegasus",
+      newPrice: "149",
+      newPrice2: "149",
+      noItems: 1,
+  },
+  {
       img: "https://cdn.leonardo.ai/users/9e51583c-3ad7-46cd-8cb1-d09fc26ccdbf/generations/240bf4c6-d397-4ab2-b990-d0c8086947ce/variations/Default_air_jordan_0_240bf4c6-d397-4ab2-b990-d0c8086947ce_0.png",
-      color: "#8F2525",
-      title:"Nike Flex",
-      desc: "Lightweight running shoe designed for natural movement, offering flexibility and a barefoot-like feel for a more adaptive stride.",
-    },
+      title: "Nike Flex",
+      newPrice: "149",
+      newPrice2: "149",
+      noItems: 1,
   },
   {
-    title: "Nike Infinity",
-    price: "$175",
-    desc: "Versatile running shoe engineered for maximum support and durability, offering a smooth ride and exceptional energy return.",
-    mobDesc:"Maximum support and durability for a smooth, energized run.",
-    displayImg:"https://cdn.leonardo.ai/users/36eaba97-5f1a-4a31-a92a-b2ea8256702f/generations/fb5734ff-020c-4a8d-8407-52da9fea1af7/variations/Default_nike_air_jordan_orange_sneaker_2_fb5734ff-020c-4a8d-8407-52da9fea1af7_0.png",
-    item1: {
       img: "https://cdn.leonardo.ai/users/36eaba97-5f1a-4a31-a92a-b2ea8256702f/generations/fb5734ff-020c-4a8d-8407-52da9fea1af7/variations/Default_nike_air_jordan_orange_sneaker_2_fb5734ff-020c-4a8d-8407-52da9fea1af7_0.png",
-      color: "#FC7B2D",
       title: "Nike Infinity",
-      desc: "Versatile running shoe engineered for maximum support and durability, offering a smooth ride and exceptional energy return.",
-    },
-    item2: {
+      newPrice: "175",
+      newPrice2: "175",
+      noItems: 1,
+  },
+  {
       img: "https://cdn.leonardo.ai/users/8d611489-0d5f-4751-a2ec-062c4b782ea8/generations/9a2b1093-22da-443e-8831-afca5e3fb0d5/variations/Default_nike_air_jordan_shoes_1_9a2b1093-22da-443e-8831-afca5e3fb0d5_0.png",
-      color: "#B4B3B7",
       title: "Nike VapMax",
-      desc: "Innovative running shoe engineered for superior cushioning, featuring tiny beads in the midsole for a personalized, responsive feel.",
-    },
-  },
+      newPrice: "175",
+      newPrice2: "175",
+      noItems: 1,
+  },,
   {
-    title: "Nike Air Force",
-    price: "$119",
-    desc: "Classic sneaker reimagined with modern details, known for its iconic design, premium leather construction, and timeless style.",
-    mobDesc:"Classic style meets modern design in premium leather.",
-    displayImg:"https://cdn.leonardo.ai/users/9e51583c-3ad7-46cd-8cb1-d09fc26ccdbf/generations/a1b280f1-8dfd-4201-88fe-07ac1cc8aba7/variations/Default_Nike_Shoes_3_a1b280f1-8dfd-4201-88fe-07ac1cc8aba7_0.png",
-    item1: {
       img: "https://cdn.leonardo.ai/users/9e51583c-3ad7-46cd-8cb1-d09fc26ccdbf/generations/a1b280f1-8dfd-4201-88fe-07ac1cc8aba7/variations/Default_Nike_Shoes_3_a1b280f1-8dfd-4201-88fe-07ac1cc8aba7_0.png",
-      color: "#7EA9B1",
       title: "Nike Air Force",
-      desc: "Classic sneaker reimagined with modern details, known for its iconic design, premium leather construction, and timeless style.",
-    },
-    item2: {
+      newPrice: "119",
+      newPrice2: "119",
+      noItems: 1,
+  },,
+  {
       img: "https://cdn.leonardo.ai/users/36eaba97-5f1a-4a31-a92a-b2ea8256702f/generations/d06f89d4-7fee-4f7c-b49b-656ed964069a/variations/Default_create_high_quality_image_with_nike_shoe_3_d06f89d4-7fee-4f7c-b49b-656ed964069a_0.png",
-      color: "#2EBAC7",
       title: "Nike Flyknit",
-      desc: "Iconic sneaker recognized for its retro design and visible full-length Air unit, delivering lightweight cushioning and a bold aesthetic.",
-    },
-  },
+      newPrice: "119",
+      newPrice2: "119",
+      noItems: 1,
+  },,
   {
-    title: "Nike Air Max",
-    price: "$229",
-    desc: "Revolutionary running shoe designed for long-distance comfort, featuring ZoomX foam and a stable, supportive design.",
-    mobDesc:"Lifestyle sneaker with a large Air Max unit for style and comfort.",
-    displayImg:"https://cdn.leonardo.ai/users/9e51583c-3ad7-46cd-8cb1-d09fc26ccdbf/generations/b6a4dc15-0862-4f73-bf3b-206662d203aa/variations/Default_air_jordan_2_b6a4dc15-0862-4f73-bf3b-206662d203aa_0.png",
-    item1: {
       img: "https://cdn.leonardo.ai/users/9e51583c-3ad7-46cd-8cb1-d09fc26ccdbf/generations/b6a4dc15-0862-4f73-bf3b-206662d203aa/variations/Default_air_jordan_2_b6a4dc15-0862-4f73-bf3b-206662d203aa_0.png",
-      color: "#7E7D80",
       title: "Nike Air Max",
-      desc: "Revolutionary running shoe designed for long-distance comfort, featuring ZoomX foam and a stable, supportive design.",
-    },
-    item2: {
-      img: "https://cdn.leonardo.ai/users/36eaba97-5f1a-4a31-a92a-b2ea8256702f/generations/cf883e79-4fa3-4313-aba8-d178a058ca42/variations/Default_nike_air_jordan_gray_sneaker_0_cf883e79-4fa3-4313-aba8-d178a058ca42_0.png",
-      color: "#C1C8D2",
-      title: "Nike Joyride",
-      desc: "Comfortable running shoe designed for everyday use, providing cushioning and stability for a smooth and reliable run.",
-    },
-  },
+      newPrice: "229",
+      newPrice2: "229",
+      noItems: 1,
+  },,
   {
-    title: "Nike RN Max",
-    price: "$249",
-    desc: "Lifestyle sneaker combining style and comfort, featuring a large Air Max unit for cushioning and a sleek, modern silhouette.",
-    mobDesc:"Lightweight, flexible running shoe for natural movement.",
-    displayImg:"https://cdn.leonardo.ai/users/8d611489-0d5f-4751-a2ec-062c4b782ea8/generations/54a1cb9a-9528-4a5d-a389-c24494b0fdb9/variations/Default_nike_sneakers_1_54a1cb9a-9528-4a5d-a389-c24494b0fdb9_0.png",
-    item1: {
+      img: "https://cdn.leonardo.ai/users/36eaba97-5f1a-4a31-a92a-b2ea8256702f/generations/cf883e79-4fa3-4313-aba8-d178a058ca42/variations/Default_nike_air_jordan_gray_sneaker_0_cf883e79-4fa3-4313-aba8-d178a058ca42_0.png",
+      title: "Nike Joyride",
+      newPrice: "229",
+      newPrice2: "229",
+      noItems: 1,
+  },,
+  {
       img: "https://cdn.leonardo.ai/users/8d611489-0d5f-4751-a2ec-062c4b782ea8/generations/54a1cb9a-9528-4a5d-a389-c24494b0fdb9/variations/Default_nike_sneakers_1_54a1cb9a-9528-4a5d-a389-c24494b0fdb9_0.png",
-      color: "#B5BF8A",
       title: "Nike RN Max",
-      desc: "Lifestyle sneaker combining style and comfort, featuring a large Air Max unit for cushioning and a sleek, modern silhouette.",
-    },
-    item2: {
+      newPrice: "249",
+      newPrice2: "249",
+      noItems: 1,
+  },,
+  {
       img: "https://cdn.leonardo.ai/users/8d611489-0d5f-4751-a2ec-062c4b782ea8/generations/bcabdefd-bdf8-4523-a45d-cc2426d529c9/variations/Default_nike_sneakers_2_bcabdefd-bdf8-4523-a45d-cc2426d529c9_0.png",
-      color: "#E9A99A",
       title: "Nike ZoomX",
-      desc: "Futuristic running shoe featuring VaporMax technology for lightweight, bouncy cushioning and a snug, sock-like fit.",
-    },
+      newPrice: "249",
+      newPrice2: "249",
+      noItems: 1,
   },
-];
+]
 
 const categoryData = [
   {title:"All", id:"cat1", value:""},
@@ -503,4 +478,4 @@ const buttonTitleData = [
   {title:"All Products", value:""}, {title:"Nike", value:"Nike"}, {title:"Adidas", value:"Adidas"}, {title:"Puma", value:"Puma"}, {title:"Vans", value:"Vans"},
 ]
 
-export {menuItemsName, slideData, featureData, galleryData, dataBase, productData, categoryData, priceData, colorData, buttonTitleData};
+export {menuItemsName, slideData, featureData, galleryData, dataBase, productDataCopy, categoryData, priceData, colorData, buttonTitleData};
