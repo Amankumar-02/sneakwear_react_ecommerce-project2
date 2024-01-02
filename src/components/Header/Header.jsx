@@ -198,7 +198,7 @@ function Header({handleInputChange}) {
                     </button>
                   </div>
                   <div>
-                    <button className='bg-red-500 py-1 px-2 text-xs text-white rounded-lg' onClick={()=>{deleteItem(data.title)}}>Delete</button>
+                    <button className='bg-red-500 py-1 px-2 text-xs text-white rounded-lg' onClick={()=>{deleteItem(data.title)}}>Remove</button>
                   </div>
                 </div>
               </div>

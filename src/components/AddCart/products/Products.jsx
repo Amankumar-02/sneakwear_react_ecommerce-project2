@@ -1,5 +1,7 @@
 import 'remixicon/fonts/remixicon.css';
 
+// The result comes from App.jsx //
+
 function Products({result}) {
   return (
     <>

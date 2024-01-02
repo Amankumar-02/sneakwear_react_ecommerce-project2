@@ -1,6 +1,8 @@
 import {fetchCartData} from '../../../features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 
+
+// this card passes to product folder //
 function Card({
   img,
   title,
