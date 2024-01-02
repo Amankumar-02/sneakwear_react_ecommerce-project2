@@ -193,12 +193,12 @@ function Home({
               <div
                 className={`slidePrice absolute ${data.text} top-[40%] left-[8%] sm:left-[6%] lg:left-[10%] text-center text-[5vw] sm:text-[4vw] lg:text-[5vw]`}
               >
-                <p>{data.price}</p>
+                <p>${data.newPrice}</p>
                 <div
                   className={`priceProgressBar bg-gray-300 h-[2px] sm:h-[4px] mt-[-4px] sm:mt-[-14px]`}
                 ></div>
               </div>
-              <button className="buyButton absolute text-white top-[70%] sm:top-[65%] right-[3%] sm:right-[5%] lg:right-[8%] text-center text-xs sm:text-[20px] lg:text-[28px] font-black border border-gray-500 cursor-pointer bg-black py-1 sm:py-4 px-1 sm:px-4 hover:text-black hover:bg-white rounded-lg">
+              <button className="buyButton absolute text-white top-[70%] sm:top-[65%] right-[3%] sm:right-[5%] lg:right-[8%] text-center text-xs sm:text-[20px] lg:text-[28px] font-black border border-gray-500 cursor-pointer bg-black py-1 sm:py-4 px-1 sm:px-4 hover:text-black hover:bg-white rounded-lg" onClick={()=>{dispatch(fetchCartData(data.title))}}>
                 Buy Now!
               </button>
             </div>
@@ -206,8 +206,7 @@ function Home({
         </div>
       </div>
 
-      <div
-        id="feature"
+      <div id="feature"
         className="features flex items-start justify-between p-[10px] sm:p-[50px]"
       >
         {featureData.map((data, index) => (

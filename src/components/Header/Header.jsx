@@ -4,7 +4,7 @@ import './Header.css'
 import {updateStyle} from '../../features/slider/sliderSlice'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {menuItemsName, dataBase, productDataCopy} from '../../dataBase';
+import {menuItemsName, dataBase, productDataCopy, slideData} from '../../dataBase';
 
 
 function Header({handleInputChange}) {
@@ -22,7 +22,7 @@ function Header({handleInputChange}) {
   let [listCart, setListCart] = useState([]);
 
   // this func is from addCart ==> Cart
-  function addItems(dataBase, storeData){
+  function cardProducts(dataBase, storeData){
     let newList = dataBase.filter((data)=>data.title === storeData);
       if(newList.map((data)=>data.title === storeData)){
         return newList[0]
@@ -30,10 +30,10 @@ function Header({handleInputChange}) {
       return null;
   }
   // this func is from addCart ==> Cart Execution
-  let result = addItems(dataBase, storeData);
+  let cardProductsResult = cardProducts(dataBase, storeData);
 
   // this func is from product list from home comp.
-  function addItems2(productDataCopy, storeData){
+  function homeProducts(productDataCopy, storeData){
     let newList = productDataCopy.filter((data)=>data.title === storeData);
       if(newList.map((data)=>data.title === storeData)){
         return newList[0]
@@ -41,17 +41,31 @@ function Header({handleInputChange}) {
       return null;
   }
   // this func is from product list from home comp. Execution
-  let result2 = addItems2(productDataCopy, storeData);
+  let homeProductsResult = homeProducts(productDataCopy, storeData);
+
+  // this func is from sliderProducts comp.
+  function sliderProducts(slideData, storeData){
+    let newList = slideData.filter((data)=>data.title === storeData);
+      if(newList.map((data)=>data.title === storeData)){
+        return newList[0]
+      }
+      return null;
+  }
+  // this func is from sliderProducts comp. Execution
+  let sliderProductsResult = sliderProducts(slideData, storeData);
 
   // Here, merge the cart items
   useEffect(() => {
-    if (result) {
-      setListCart((prev) => [...prev, result]);
+    if (cardProductsResult) {
+      setListCart((prev) => [...prev, cardProductsResult]);
     }
-    if (result2) {
-      setListCart((prev) => [...prev, result2]);
+    if (homeProductsResult) {
+      setListCart((prev) => [...prev, homeProductsResult]);
     }
-  }, [result, result2]);
+    if (sliderProductsResult) {
+      setListCart((prev) => [...prev, sliderProductsResult]);
+    }
+  }, [cardProductsResult, homeProductsResult, sliderProductsResult]);
 
   const increaseItem = (title)=>{
       setListCart((prev)=>prev.map((data)=>data.title === title? {...data, noItems: data.noItems+1, newPrice: +data.newPrice + +data.newPrice2 } : data))
@@ -193,7 +207,7 @@ function Header({handleInputChange}) {
         </div>
         <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
           <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer">
-            {listCart.reduce((total, data) => total + (+data.newPrice), 0)} $
+            $ {listCart.reduce((total, data) => total + (+data.newPrice), 0)}
           </div>
           <div
             className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer"
