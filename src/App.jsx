@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Outlet/>
-      <Toaster position='top-left'/>
+      <Toaster/>
     </>
   )
 }

@@ -236,6 +236,7 @@ function Header({handleInputChange, logo}) {
                       className="bg-red-500 py-1 px-2 text-xs text-white rounded-lg hover:bg-red-600"
                       onClick={() => {
                         deleteItem(data.title);
+                        toast.success("Item Removed");
                       }}
                     >
                       Remove
@@ -247,7 +248,7 @@ function Header({handleInputChange, logo}) {
           ))}
         </div>
         <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
-          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600">
+          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" onClick={()=>{if(data.newPrice.length>0){navigate('/payment')}}}>
             $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
           </div>
           <div

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 // import visa from '../../img/visa.png';
 // import master from '../../img/master.png';
 import { slideData, featureData, galleryData } from '../../dataBase';
+import toast from "react-hot-toast";
 
 function Home({
   handleRadioChange,
@@ -196,7 +197,10 @@ function Home({
                   className={`priceProgressBar bg-gray-300 h-[2px] sm:h-[4px] mt-[-4px] sm:mt-[-14px]`}
                 ></div>
               </div>
-              <button className="buyButton absolute text-white top-[70%] sm:top-[65%] right-[3%] sm:right-[5%] lg:right-[8%] text-center text-xs sm:text-[20px] lg:text-[28px] font-black border border-gray-500 cursor-pointer bg-black py-1 sm:py-4 px-1 sm:px-4 hover:text-black hover:bg-white rounded-lg" onClick={()=>{dispatch(fetchCartData(data.title))}}>
+              <button className="buyButton absolute text-white top-[70%] sm:top-[65%] right-[3%] sm:right-[5%] lg:right-[8%] text-center text-xs sm:text-[20px] lg:text-[28px] font-black border border-gray-500 cursor-pointer bg-black py-1 sm:py-4 px-1 sm:px-4 hover:text-black hover:bg-white rounded-lg" onClick={()=>{
+                dispatch(fetchCartData(data.title));
+                toast.success("Added to Cart");
+                }}>
                 Buy Now!
               </button>
             </div>
@@ -282,6 +286,7 @@ function Home({
                 // onClick={()=>{setBuyPanel({transform: 'scale(1)', transition: 'all ease 0.4s'})}}
                 onClick={() => {
                   dispatch(fetchCartData(data.title));
+                  toast.success("Added to Cart");
                 }}
               >
                 Buy Now

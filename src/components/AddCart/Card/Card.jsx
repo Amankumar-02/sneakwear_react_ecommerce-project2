@@ -1,6 +1,6 @@
 import {fetchCartData} from '../../../features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
-
+import toast from "react-hot-toast";
 
 // this card passes to product folder //
 function Card({
@@ -32,7 +32,10 @@ function Card({
               </div>
               <div className="bag"><i className="ri-shopping-bag-fill text-[#535353]"></i></div>
             </section>
-            <button className="border border-black p-1 mt-2 w-full hover:border-red-500 hover:text-red-500" onClick={()=>{dispatch(fetchCartData(title))}}>Add to Cart</button>
+            <button className="border border-black p-1 mt-2 w-full hover:border-red-500 hover:text-red-500" onClick={()=>{
+              dispatch(fetchCartData(title));
+              toast.success("Added to Cart");
+              }}>Add to Cart</button>
         </div>
       </section>
     </>
