@@ -478,4 +478,16 @@ const buttonTitleData = [
   {title:"All Products", value:""}, {title:"Nike", value:"Nike"}, {title:"Adidas", value:"Adidas"}, {title:"Puma", value:"Puma"}, {title:"Vans", value:"Vans"},
 ]
 
-export {menuItemsName, slideData, featureData, galleryData, dataBase, productDataCopy, categoryData, priceData, colorData, buttonTitleData};
+const footerData = [
+  {title:"About Us", more:[
+    {subTitle:"Company",},{subTitle:"Contact"},{subTitle:"Careers"},{subTitle:"Affiliates"},{subTitle:"Stores"},
+  ]},
+  {title:"Useful links", more:[
+    {subTitle:"Support",},{subTitle:"Refund"},{subTitle:"Careers"},{subTitle:"FAQ"},{subTitle:"Stores"},
+  ]},
+  {title:"Products", more:[
+    {subTitle:"AIR FORCE", color:"bg-red-500",},{subTitle:"AIR JORDAN", color:"bg-yellow-500",},{subTitle:"BLAZER", color:"bg-blue-500",},{subTitle:"CRATER", color:"bg-gray-500",},{subTitle:"HIPPIE", color:"bg-green-500",},
+  ]},
+]
+
+export {menuItemsName, slideData, featureData, galleryData, dataBase, productDataCopy, categoryData, priceData, colorData, buttonTitleData, footerData};

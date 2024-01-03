@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import 'remixicon/fonts/remixicon.css';
-import './Header.css'
-import {updateStyle} from '../../features/slider/sliderSlice'
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import './Header.css';
+import {updateStyle} from '../../features/slider/sliderSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import {menuItemsName, dataBase, productDataCopy, slideData} from '../../dataBase';
+import {useNavigate, NavLink} from 'react-router-dom';
+import authService from "../../appwrite/auth";
+import toast from "react-hot-toast";
 
-
-function Header({handleInputChange}) {
+function Header({handleInputChange, logo}) {
   let dispatch  = useDispatch();
   const slider = (index)=>{
     dispatch(updateStyle(`translateX(-${index*100}vw)`))
@@ -67,6 +68,7 @@ function Header({handleInputChange}) {
     }
   }, [cardProductsResult, homeProductsResult, sliderProductsResult]);
 
+  // Cart Events
   const increaseItem = (title)=>{
       setListCart((prev)=>prev.map((data)=>data.title === title? {...data, noItems: data.noItems+1, newPrice: +data.newPrice + +data.newPrice2 } : data))
   }
@@ -77,13 +79,47 @@ function Header({handleInputChange}) {
     setListCart((prev)=>prev.filter((data)=>data.title != title));
   }
 
+  // Toggle of login, logout icon
+  const [icon, setIcon] = useState(
+    <NavLink to="/login" className="me-3 text-lg">
+      <i className="ri-user-add-fill hover:text-red-500"></i>
+    </NavLink>
+  );
+  const navigate = useNavigate()
+
+  // Logout Function
+  const logoutUser = async () => {
+    try {
+      await authService.logout();
+      navigate("/");
+      console.log(`Logout SuccessFully`);
+      setIcon(<NavLink to="/login" className="me-3 text-lg hover:text-red-500">
+      <i className="ri-user-add-fill"></i>
+    </NavLink>)
+      toast.success("Successfully Logout!");
+    } catch (error) {
+      console.error("Log-out failed:", error);
+      toast.error(error.message);
+    }
+  };
+
+  // Motitor the toggle state of login
+  useEffect(()=>{
+    if (logo) {
+      setIcon(
+        <i className="ri-shut-down-line me-3 text-lg cursor-pointer hover:text-red-500" onClick={logoutUser}></i>
+      );
+    }
+  }, [logo])
+
   return (
     <>
-      <div className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300">
+      <div id='headerWrapper'
+       className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300">
         <div className="navTop flex flex-col sm:flex-row items-center justify-between">
           <div className="navItem">
             <a href="#">
-            <h1 className="text-[1.5em] font-semibold">Sneakwear</h1>
+              <h1 className="text-[1.5em] font-semibold">Sneakwear</h1>
             </a>
           </div>
           <div className="navItem py-1 sm:py-0">
@@ -99,12 +135,12 @@ function Header({handleInputChange}) {
           </div>
           <div className="flex items-center">
             <div className="profile-container">
-              <a href="#" className="me-3 text-lg">
+              <a href="#" className="me-3 text-lg hover:text-red-500">
                 <i className="ri-heart-line"></i>
               </a>
               <a
-                // href="#cartItems"
-                className="me-3 text-lg openCart"
+                // href=""
+                className="me-3 text-lg openCart cursor-pointe"
                 onClick={() => {
                   setOpenCart({
                     left: "calc(100% - 300px",
@@ -112,15 +148,13 @@ function Header({handleInputChange}) {
                   });
                 }}
               >
-                <i className="ri-shopping-cart-2-line relative">
-                  <span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4">
+                <i className="ri-shopping-cart-2-line relative  hover:text-red-500">
+                  <span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4 text-white">
                     {listCart.length}
                   </span>
                 </i>
               </a>
-              <a href="#" className="me-3 text-lg">
-                <i className="ri-user-add-fill"></i>
-              </a>
+              {icon}
             </div>
             <div id="progressBarText" className="navItem">
               <span
@@ -146,7 +180,7 @@ function Header({handleInputChange}) {
         </div>
       </div>
 
-      <div
+      <div id='cartHeader'
         className="cart fixed top-0 w-[300px] bg-[#dadada] border-s border-red-500 h-[100vh] z-[51]"
         style={openCart}
       >
@@ -198,7 +232,14 @@ function Header({handleInputChange}) {
                     </button>
                   </div>
                   <div>
-                    <button className='bg-red-500 py-1 px-2 text-xs text-white rounded-lg' onClick={()=>{deleteItem(data.title)}}>Remove</button>
+                    <button
+                      className="bg-red-500 py-1 px-2 text-xs text-white rounded-lg hover:bg-red-600"
+                      onClick={() => {
+                        deleteItem(data.title);
+                      }}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
               </div>
@@ -206,11 +247,11 @@ function Header({handleInputChange}) {
           ))}
         </div>
         <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
-          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer">
-            $ {listCart.reduce((total, data) => total + (+data.newPrice), 0)}
+          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600">
+            $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
           </div>
           <div
-            className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer"
+            className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-gray-900"
             onClick={() => {
               setOpenCart({ left: "100%", transition: "0.5s" });
             }}

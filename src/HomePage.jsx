@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from "react";
 import authService from "./appwrite/auth.js";
-import { useNavigate, Link } from "react-router-dom";
-import toast from 'react-hot-toast';
-
-
+// import { useNavigate, Link } from "react-router-dom";
+// import toast from 'react-hot-toast';
 import {Header, Home, Footer} from './components/Index.js';
 import {dataBase} from './dataBase.js';
-import {Card} from './components/AddCart/components/index.js';
+import {Card} from './components/AddCart/index.js';
 
 
 function HomePage() {
-
-  //newData
   // var for selection of radio and recommended Buttons
   const [selectCategory, setSelectCategory] = useState(null);
   // var for nav searchbar
@@ -33,8 +29,6 @@ function HomePage() {
     setSelectCategory(e.target.value)
   }
 
-  
-
   // Main Filter Container Function
   function filteredData(dataBase, selected, query){
     let filteredProducts = dataBase
@@ -46,22 +40,11 @@ function HomePage() {
     //Selected radio and buttons Filter
     if(selected){
       filteredProducts = filteredProducts.filter(({category, color, company, newPrice, title})=>
-        category === selected ||
-        color === selected ||
-        company === selected ||
-        newPrice === selected ||
-        title === selected);
+        category === selected || color === selected || company === selected || newPrice === selected || title === selected);
     }
 
     return filteredProducts.map(({img, title, reviews, prevPrice, newPrice}, index)=>(
-      <Card
-      key = {index}
-      img = {img}
-      title = {title}
-      reviews = {reviews}
-      prevPrice = {prevPrice}
-      newPrice = {newPrice}
-      />
+      <Card key = {index} img = {img} title = {title} reviews = {reviews} prevPrice = {prevPrice} newPrice = {newPrice} />
     ))
   }
 
@@ -69,7 +52,8 @@ function HomePage() {
   const result = filteredData(dataBase, selectCategory, query);
 
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  //get to login Data
   const [userDetails, setUserDetails] = useState();
   useEffect(()=>{
     try {
@@ -90,7 +74,7 @@ function HomePage() {
     <>
         {/* {userDetails ? (
             <>            */}
-                <Header query={query} handleInputChange={handleInputChange} logo={userDetails}/>
+                <Header handleInputChange={handleInputChange} logo={userDetails}/>
                 <Home  handleRadioChange={handleRadioChange}  handleClick={handleClick} result={result} />
                 <Footer/>
             {/* </>

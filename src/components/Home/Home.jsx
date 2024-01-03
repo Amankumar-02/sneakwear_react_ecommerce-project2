@@ -5,13 +5,12 @@ import './Home.css';
 import {fetchCartData} from '../../features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 
-import Products from '../AddCart/products/Products';
-import Recommended from '../AddCart/recommended/Recommended';
+import {Products, Recommended} from '../AddCart/index';
 import {SideBar} from '../AddCart/sidebar/index';
 
 import { useSelector } from 'react-redux';
-import visa from '../../img/visa.png';
-import master from '../../img/master.png';
+// import visa from '../../img/visa.png';
+// import master from '../../img/master.png';
 import { slideData, featureData, galleryData } from '../../dataBase';
 
 function Home({
@@ -162,8 +161,7 @@ function Home({
 
   return (
     <>
-      <div
-        id="slider"
+      <div id="slider"
         className="slider bg-[url(https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80)] bg-cover bg-center bg-no-repeat w-full overflow-hidden"
       >
         <div className={`sliderWrapper flex w-[500vw]`} style={storeData}>
@@ -329,6 +327,7 @@ function Home({
         ))}
       </div>
 
+      {/* Here is the Cart Data  */}
       <div id="cartItems" className="relative">
         <SideBar handleRadioChange={handleRadioChange} />
         <Recommended handleClick={handleClick} />

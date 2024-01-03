@@ -1,19 +1,10 @@
 import React from 'react'
 import 'remixicon/fonts/remixicon.css';
 import './Footer.css'
+import { footerData } from '../../dataBase';
 
 function Footer() {
-  const footerData = [
-    {title:"About Us", more:[
-      {subTitle:"Company",},{subTitle:"Contact"},{subTitle:"Careers"},{subTitle:"Affiliates"},{subTitle:"Stores"},
-    ]},
-    {title:"Useful links", more:[
-      {subTitle:"Support",},{subTitle:"Refund"},{subTitle:"Careers"},{subTitle:"FAQ"},{subTitle:"Stores"},
-    ]},
-    {title:"Products", more:[
-      {subTitle:"AIR FORCE", color:"bg-red-500",},{subTitle:"AIR JORDAN", color:"bg-yellow-500",},{subTitle:"BLAZER", color:"bg-blue-500",},{subTitle:"CRATER", color:"bg-gray-500",},{subTitle:"HIPPIE", color:"bg-green-500",},
-    ]},
-  ]
+  
   return (
     <>
     <div className="footer bg-gray-800 flex">
