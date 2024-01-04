@@ -131,7 +131,8 @@ function Header({handleInputChange, logo}) {
 
   // Make Payment Stripe
   const makePayment = async()=>{
-    const stripe = await loadStripe("pk_test_51OUVp8SFnYNvOyeTX3Vr136KJfk4tBflioLDAftorS81Ivd0yk4CPSUwTPRIaiws8od3cCwFCUriqZkaaoS1rWoc004y0b4tjd");
+    try{
+      const stripe = await loadStripe("pk_test_51OUVp8SFnYNvOyeTX3Vr136KJfk4tBflioLDAftorS81Ivd0yk4CPSUwTPRIaiws8od3cCwFCUriqZkaaoS1rWoc004y0b4tjd");
     const body = {
       products:listCart
     }
@@ -149,6 +150,11 @@ function Header({handleInputChange, logo}) {
     });
     if(result.error){
       console.log(result.error);
+      toast.error("Payment Gatway Suspended!");
+    }
+    }catch(error){
+      console.error("Error during payment:", error);
+      toast.error("Payment Gatway Suspended!");
     }
   }
 
