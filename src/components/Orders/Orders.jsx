@@ -21,7 +21,7 @@ const navigate = useNavigate();
         console.log(`Get Data error: `, error)
     }
     }, [])
-    console.log(userDetails)
+    // console.log(userDetails)
 
     //orders
     const [listCart, setListCart] = useState([])
@@ -33,7 +33,7 @@ const navigate = useNavigate();
         console.error('Database List failed:', error);
         }
     }, [])
-    console.log(listCart)
+    // console.log(listCart)
 
     //favourites
     const [listCart2, setListCart2] = useState([])
@@ -45,7 +45,7 @@ const navigate = useNavigate();
         console.error('Database List failed:', error);
         }
     }, [])
-    console.log(listCart2)
+    // console.log(listCart2)
 
     //favourites
     const removeItem2 = async (id)=>{
@@ -85,7 +85,7 @@ const navigate = useNavigate();
         <h1 className="text-3xl font-semibold">Favourites</h1>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
           {listCart2.map((data, index) => {
-            if (userDetails.$id == data.$permissions[0].slice(11, -2)) {
+            if (userDetails?.$id == data.$permissions[0].slice(11, -2)) {
               return (
                 <section
                   key={index}
@@ -136,7 +136,7 @@ const navigate = useNavigate();
         <h1 className="text-3xl font-semibold">Previous Orders</h1>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
           {listCart.map((data, index) => {
-            if (userDetails.$id == data.$permissions[0].slice(11, -2)) {
+            if (userDetails?.$id == data.$permissions[0].slice(11, -2)) {
               return (
                 <section
                   key={index}

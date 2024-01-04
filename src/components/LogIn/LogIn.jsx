@@ -17,11 +17,12 @@ function LogIn() {
       navigate('/');
       console.log(`Login SuccessFully`)
       toast.success('Successfully Login!');
+      window.location.reload();
     } catch (error) {
       console.error('Log-in failed:', error);
       toast.error(error.message);
     }
-    window.location.reload();
+    // window.location.reload();
   }
   return (
     <>

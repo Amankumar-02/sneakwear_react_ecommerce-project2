@@ -14,6 +14,7 @@ import appwriteService from '../../appwrite/database';
 
 function Header({handleInputChange, logo}) {
   let dispatch  = useDispatch();
+  const navigate = useNavigate();
   const slider = (index)=>{
     dispatch(updateStyle(`translateX(-${index*100}vw)`))
   };
@@ -83,13 +84,6 @@ function Header({handleInputChange, logo}) {
     setListCart((prev)=>prev.filter((data)=>data.title != title));
   }
 
-  // Toggle of login, logout icon
-  const [icon, setIcon] = useState(
-    <div onClick={()=>{setListCart([]); navigate("/login")}} className='me-3 text-lg inline-block'>
-      <i className="ri-user-add-fill hover:text-red-500"></i>
-    </div>
-  );
-  const navigate = useNavigate()
 
   // Logout Function
   const logoutUser = async () => {
@@ -111,7 +105,13 @@ function Header({handleInputChange, logo}) {
     setFetchDatabase2([]);
   };
 
-  // Motitor the toggle state of login
+  // Toggle of login, logout icon state
+  const [icon, setIcon] = useState(
+    <div onClick={()=>{setListCart([]); navigate("/login")}} className='me-3 text-lg inline-block'>
+      <i className="ri-user-add-fill hover:text-red-500"></i>
+    </div>
+  );
+  // Motitor the toggle state of login from homePage Component
   useEffect(()=>{
     if (logo) {
       setIcon(
@@ -135,9 +135,10 @@ function Header({handleInputChange, logo}) {
     }
   }, [])
 
-  // Appwrite database creation orders Make Payment Stripe
+  // Appwrite order database creation 
+  // make payment gateway through Stripe
   const makePayment = async()=>{
-    // appwrite database creation
+    // appwrite database creation of orders
     listCart.map( async(data)=>{
       try{
         await appwriteService.createDatabase({
@@ -153,9 +154,8 @@ function Header({handleInputChange, logo}) {
         console.log(error);
       }
     });
-    // console.log(listCart)
 
-    //Make Payment Stripe
+    //make payment gateway through Stripe
     if(listCart.length>=1){
       try{
         const stripe = await loadStripe("pk_test_51OUoaKSJR0YvHX116PLMoLiXhxnRv2BB0VwPZ6nIHUfUjyF95C8upgiw7VcaNjrmOxMfMqdLiHqHz4BPmwIGVqWs00DI9lsIuG");
@@ -184,7 +184,8 @@ function Header({handleInputChange, logo}) {
       }
     }
   }
-  //Appwrite database creation favourites
+
+  //this func create a Fav. database in appwrite
   const addFav = async()=>{
     listCart.map( async(data)=>{
       try{
@@ -204,7 +205,7 @@ function Header({handleInputChange, logo}) {
     });
   }
 
-  //Appwrite Listdatabase
+  //this func fetch the fav. database from appwrite
   const [fetchDatabase2, setFetchDatabase2] = useState([]);
   useEffect(()=>{
     try {
@@ -215,6 +216,16 @@ function Header({handleInputChange, logo}) {
     setFetchDatabase2([]);
     }
   }, [])
+
+  // this func filter the appwrite fetched Database according to Login User
+  const [filteredDatabase, setFilteredDataBase] = useState([]);
+  useEffect(() => {
+    const filteredData = fetchDatabase2.filter((data) =>
+      data.$permissions[0].slice(11, -2) == userDetails?.$id
+    );
+    setFilteredDataBase(filteredData);
+  }, [fetchDatabase2, userDetails]);
+
 
   return (
     <>
@@ -250,7 +261,8 @@ function Header({handleInputChange, logo}) {
                 <i className="ri-heart-line relative hover:text-red-500">
                   <span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4 text-white">
                     {/* {listCart.length} */}
-                    {fetchDatabase2.length}
+                    {/* {fetchDatabase2.length} */}
+                    {filteredDatabase.length}
                   </span>
                 </i>
               </a>
