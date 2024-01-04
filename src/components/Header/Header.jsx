@@ -7,8 +7,7 @@ import {menuItemsName, dataBase, productDataCopy, slideData} from '../../dataBas
 import {useNavigate, NavLink} from 'react-router-dom';
 import authService from "../../appwrite/auth";
 import toast from "react-hot-toast";
-
-
+// stripe import
 import {loadStripe} from '@stripe/stripe-js';
 
 function Header({handleInputChange, logo}) {
@@ -115,10 +114,22 @@ function Header({handleInputChange, logo}) {
     }
   }, [logo])
 
+  //login or logout status get
+  const [userDetails, setUserDetails] = useState();
+  useEffect(()=>{
+    try {
+      const getData = authService.account.get()
+      getData.then(
+        function(res){
+          setUserDetails(res)
+        }
+      )
+    } catch (error) {
+      console.log(`Get Data error: `, error)
+    }
+  }, [])
 
-
-
-  // Make Payment
+  // Make Payment Stripe
   const makePayment = async()=>{
     const stripe = await loadStripe("pk_test_51OUVp8SFnYNvOyeTX3Vr136KJfk4tBflioLDAftorS81Ivd0yk4CPSUwTPRIaiws8od3cCwFCUriqZkaaoS1rWoc004y0b4tjd");
     const body = {
@@ -277,11 +288,20 @@ function Header({handleInputChange, logo}) {
           ))}
         </div>
         <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
-          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
+          {userDetails? (<><div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
           onClick={makePayment}
           >
             $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
-          </div>
+          </div></>) : (<><div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
+          onClick={()=>{navigate("/login");}}
+          >
+            $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
+          </div></>)}
+          {/* <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
+          onClick={makePayment}
+          >
+            $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
+          </div> */}
           <div
             className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-gray-900"
             onClick={() => {
