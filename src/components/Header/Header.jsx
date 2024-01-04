@@ -9,6 +9,8 @@ import authService from "../../appwrite/auth";
 import toast from "react-hot-toast";
 // stripe import
 import {loadStripe} from '@stripe/stripe-js';
+// appwrite services
+import appwriteService from '../../appwrite/database';
 
 function Header({handleInputChange, logo}) {
   let dispatch  = useDispatch();
@@ -83,9 +85,9 @@ function Header({handleInputChange, logo}) {
 
   // Toggle of login, logout icon
   const [icon, setIcon] = useState(
-    <NavLink to="/login" className="me-3 text-lg">
+    <div onClick={()=>{setListCart([]); navigate("/login")}} className='me-3 text-lg inline-block'>
       <i className="ri-user-add-fill hover:text-red-500"></i>
-    </NavLink>
+    </div>
   );
   const navigate = useNavigate()
 
@@ -95,14 +97,18 @@ function Header({handleInputChange, logo}) {
       await authService.logout();
       navigate("/");
       console.log(`Logout SuccessFully`);
-      setIcon(<NavLink to="/login" className="me-3 text-lg hover:text-red-500">
-      <i className="ri-user-add-fill"></i>
-    </NavLink>)
+      setIcon(
+      <div onClick={()=>{setListCart([]); navigate("/login")}} className='me-3 text-lg inline-block'>
+      <i className="ri-user-add-fill hover:text-red-500"></i>
+    </div>
+    )
       toast.success("Successfully Logout!");
     } catch (error) {
       console.error("Log-out failed:", error);
       toast.error(error.message);
     }
+    setListCart([]);
+    setFetchDatabase2([]);
   };
 
   // Motitor the toggle state of login
@@ -129,39 +135,93 @@ function Header({handleInputChange, logo}) {
     }
   }, [])
 
-  // Make Payment Stripe
+  // Appwrite database creation orders Make Payment Stripe
   const makePayment = async()=>{
-    try{
-      const stripe = await loadStripe("pk_test_51OUoaKSJR0YvHX116PLMoLiXhxnRv2BB0VwPZ6nIHUfUjyF95C8upgiw7VcaNjrmOxMfMqdLiHqHz4BPmwIGVqWs00DI9lsIuG");
-    const body = {
-      products:listCart
-    }
-    const headers = {
-      "Content-Type":"application/json"
-    }
-    const response = await fetch("http://localhost:7000/api/create-checkout-session",{
-      method:"POST",
-      headers:headers,
-      body:JSON.stringify(body)
+    // appwrite database creation
+    listCart.map( async(data)=>{
+      try{
+        await appwriteService.createDatabase({
+          title:data?.title,
+          noItems:data?.noItems,
+          amount:data?.newPrice2,
+          img:data?.img,
+          newPrice:data?.newPrice,
+        });
+        console.log("cartItem Added To Appwrite");
+        // toast.success("appwrite updated");
+      }catch(error){
+        console.log(error);
+      }
     });
-    const session = await response.json();
-    const result = stripe.redirectToCheckout({
-      sessionId:session.id
-    });
-    if(result.error){
-      console.log(result.error);
-      toast.error("Payment Gatway Suspended!");
-    }
-    }catch(error){
-      console.error("Error during payment:", error);
-      toast.error("Payment Gateway Suspended!");
+    // console.log(listCart)
+
+    //Make Payment Stripe
+    if(listCart.length>=1){
+      try{
+        const stripe = await loadStripe("pk_test_51OUoaKSJR0YvHX116PLMoLiXhxnRv2BB0VwPZ6nIHUfUjyF95C8upgiw7VcaNjrmOxMfMqdLiHqHz4BPmwIGVqWs00DI9lsIuG");
+      const body = {
+        products:listCart
+      }
+      const headers = {
+        "Content-Type":"application/json"
+      }
+      const response = await fetch("http://localhost:7000/api/create-checkout-session",{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify(body)
+      });
+      const session = await response.json();
+      const result = stripe.redirectToCheckout({
+        sessionId:session.id
+      });
+      if(result.error){
+        console.log(result.error);
+        toast.error("Payment Gatway Suspended!");
+      }
+      }catch(error){
+        console.error("Error during payment:", error);
+        toast.error("Payment Gateway Suspended!");
+      }
     }
   }
+  //Appwrite database creation favourites
+  const addFav = async()=>{
+    listCart.map( async(data)=>{
+      try{
+        await appwriteService.createDatabase2({
+          title:data?.title,
+          noItems:data?.noItems,
+          amount:data?.newPrice2,
+          img:data?.img,
+          newPrice:data?.newPrice,
+        });
+        console.log("cartItem Added To Appwrite");
+        toast.success("Added to Fav.");
+        setListCart([]);
+      }catch(error){
+        console.log(error);
+      }
+    });
+  }
+
+  //Appwrite Listdatabase
+  const [fetchDatabase2, setFetchDatabase2] = useState([]);
+  useEffect(()=>{
+    try {
+    const getOrders = appwriteService.listDatabase2()
+    getOrders.then(res=>{setFetchDatabase2(res.documents)})
+    } catch (error) {
+    console.error('Database List failed:', error);
+    setFetchDatabase2([]);
+    }
+  }, [])
 
   return (
     <>
-      <div id='headerWrapper'
-       className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300">
+      <div
+        id="headerWrapper"
+        className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300"
+      >
         <div className="navTop flex flex-col sm:flex-row items-center justify-between">
           <div className="navItem">
             <a href="#">
@@ -181,12 +241,22 @@ function Header({handleInputChange, logo}) {
           </div>
           <div className="flex items-center">
             <div className="profile-container">
-              <a href="#" className="me-3 text-lg hover:text-red-500">
-                <i className="ri-heart-line"></i>
+              <a
+                className="me-3 text-lg hover:text-red-500 cursor-pointer"
+                onClick={() => {
+                  navigate("/orders");
+                }}
+              >
+                <i className="ri-heart-line relative hover:text-red-500">
+                  <span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4 text-white">
+                    {/* {listCart.length} */}
+                    {fetchDatabase2.length}
+                  </span>
+                </i>
               </a>
               <a
                 // href=""
-                className="me-3 text-lg openCart cursor-pointe"
+                className="me-3 text-lg openCart cursor-pointer"
                 onClick={() => {
                   setOpenCart({
                     left: "calc(100% - 300px",
@@ -226,7 +296,8 @@ function Header({handleInputChange, logo}) {
         </div>
       </div>
 
-      <div id='cartHeader'
+      <div
+        id="cartHeader"
         className="cart fixed top-0 w-[300px] bg-[#dadada] border-s border-red-500 h-[100vh] z-[51]"
         style={openCart}
       >
@@ -293,20 +364,46 @@ function Header({handleInputChange, logo}) {
             </section>
           ))}
         </div>
-        <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
-          {userDetails? (<><div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
-          onClick={makePayment}
-          >
-            $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
-          </div></>) : (<><div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
-          onClick={()=>{navigate("/login");}}
-          >
-            $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
-          </div></>)}
-          {/* <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
-          onClick={makePayment}
-          >
-            $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
+        <div className="checkout absolute bottom-0 w-full grid grid-cols-3">
+          {userDetails ? (
+            <>
+              <div
+                className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600"
+                onClick={makePayment}
+                // onClick={createDatabase}
+              >
+                $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
+              </div>
+              {/* favourite */}
+              <div className='closeCart bg-white text-black w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-gray-300'
+                onClick={addFav}
+              >
+                + Favourite
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600"
+                onClick={() => {
+                  navigate("/login");
+                }}
+                // onClick={createDatabase}
+              >
+                $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
+              </div>
+              {/* favourite */}
+              <div className='closeCart bg-white text-black w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-gray-300'
+              onClick={() => {
+                navigate("/login");
+              }}
+              >
+                + Favourite
+              </div>
+            </>
+          )}
+          {/* <div className='closeCart bg-white text-black w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-gray-300'>
+                Favourite
           </div> */}
           <div
             className="closeCart bg-[#1c1f25] text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-gray-900"

@@ -5,5 +5,6 @@ import LogIn from "./LogIn/LogIn";
 import SignUp from "./SignIn/SignIn";
 import Success from "./Payment/Success";
 import Cancel from "./Payment/Cancel";
+import Orders from "./Orders/Orders";
 
-export {Header, Home, Footer, LogIn, SignUp, Success, Cancel};
+export {Header, Home, Footer, LogIn, SignUp, Success, Cancel, Orders};

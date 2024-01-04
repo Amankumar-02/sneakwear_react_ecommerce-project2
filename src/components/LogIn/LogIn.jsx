@@ -21,6 +21,7 @@ function LogIn() {
       console.error('Log-in failed:', error);
       toast.error(error.message);
     }
+    window.location.reload();
   }
   return (
     <>
