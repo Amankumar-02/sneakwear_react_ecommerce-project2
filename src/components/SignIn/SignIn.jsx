@@ -92,7 +92,7 @@ function SignUp() {
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-center">
                 <div className="text-sm">
                   <a
                     href="/login"

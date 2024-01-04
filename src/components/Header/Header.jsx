@@ -8,6 +8,9 @@ import {useNavigate, NavLink} from 'react-router-dom';
 import authService from "../../appwrite/auth";
 import toast from "react-hot-toast";
 
+
+import {loadStripe} from '@stripe/stripe-js';
+
 function Header({handleInputChange, logo}) {
   let dispatch  = useDispatch();
   const slider = (index)=>{
@@ -111,6 +114,32 @@ function Header({handleInputChange, logo}) {
       );
     }
   }, [logo])
+
+
+
+
+  // Make Payment
+  const makePayment = async()=>{
+    const stripe = await loadStripe("pk_test_51OUVp8SFnYNvOyeTX3Vr136KJfk4tBflioLDAftorS81Ivd0yk4CPSUwTPRIaiws8od3cCwFCUriqZkaaoS1rWoc004y0b4tjd");
+    const body = {
+      products:listCart
+    }
+    const headers = {
+      "Content-Type":"application/json"
+    }
+    const response = await fetch("http://localhost:7000/api/create-checkout-session",{
+      method:"POST",
+      headers:headers,
+      body:JSON.stringify(body)
+    });
+    const session = await response.json();
+    const result = stripe.redirectToCheckout({
+      sessionId:session.id
+    });
+    if(result.error){
+      console.log(result.error);
+    }
+  }
 
   return (
     <>
@@ -248,7 +277,9 @@ function Header({handleInputChange, logo}) {
           ))}
         </div>
         <div className="checkout absolute bottom-0 w-full grid grid-cols-2">
-          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" onClick={()=>{if(data.newPrice.length>0){navigate('/payment')}}}>
+          <div className="total bg-red-500 text-white w-full h-[70px] flex justify-center items-center font-semibold cursor-pointer hover:bg-red-600" 
+          onClick={makePayment}
+          >
             $ {listCart.reduce((total, data) => total + +data.newPrice, 0)}
           </div>
           <div
