@@ -1,4 +1,4 @@
-const stripe = require("stripe")("sk_test_51OUVp8SFnYNvOyeTPRQ2tfDyrOiqk9Bg32ZHbUwI6wPuUoGnsMFyMMsktHmfJuLzePGaDd2cSQOG2yecSlhhKbYW00VUhZJOqI")
+const stripe = require("stripe")("sk_test_51OUoaKSJR0YvHX11PHbKzehf3lmRxroCKQJq9LqfJBhSQiCocjGCv7tsvt7btVxaMTJah5z27V6HSxE8Mr7qIuJb00HqEJ9BsA")
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -26,10 +26,10 @@ app.post('/api/create-checkout-session', async (req, res) => {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: "http://localhost:5173/success",
-        cancel_url: "http://localhost:5173/cancel",
-        // success_url: "https://sneakwear23.netlify.app/success",
-        // cancel_url: "https://sneakwear23.netlify.app/cancel",
+        // success_url: "http://localhost:5173/success",
+        // cancel_url: "http://localhost:5173/cancel",
+        success_url: "https://sneakwear23.netlify.app/success",
+        cancel_url: "https://sneakwear23.netlify.app/cancel",
     })
     res.json({ id: session.id })
 })
