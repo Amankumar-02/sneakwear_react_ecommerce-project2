@@ -1,28 +1,31 @@
 import React, {useState, useEffect} from 'react';
 import 'remixicon/fonts/remixicon.css';
 import './Header.css';
-import {updateStyle} from '../../features/slider/sliderSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import {updateStyle} from '../../features/slider/sliderSlice';
 import {menuItemsName, dataBase, productDataCopy, slideData} from '../../dataBase';
-import {useNavigate, NavLink} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import authService from "../../appwrite/auth";
 import toast from "react-hot-toast";
-// stripe import
 import {loadStripe} from '@stripe/stripe-js';
-// appwrite services
 import appwriteService from '../../appwrite/database';
 
 function Header({handleInputChange, logo}) {
   let dispatch  = useDispatch();
   const navigate = useNavigate();
+  const [openCart, setOpenCart] = useState({left:"100%", transition:'0.5s'});
+  let [listCart, setListCart] = useState([]);
+  // Toggle of login, logout icon state
+  const [icon, setIcon] = useState(
+    <div onClick={()=>{setListCart([]); navigate("/login")}} className='me-3 text-lg inline-block'>
+      <i className="ri-user-add-fill hover:text-red-500"></i>
+    </div>
+  );
+  const storeData = useSelector(state=>state.cart.cart);
   const slider = (index)=>{
     dispatch(updateStyle(`translateX(-${index*100}vw)`))
   };
 
-  // new data
-  const storeData = useSelector(state=>state.cart.cart);
-
-  const [openCart, setOpenCart] = useState({left:"100%", transition:'0.5s'});
 
   // this func manage the cart data
   const processProducts = (source, storeData) => {
@@ -32,7 +35,6 @@ function Header({handleInputChange, logo}) {
   const homeProductsResult = processProducts(productDataCopy, storeData);
   const sliderProductsResult = processProducts(slideData, storeData);
 
-  let [listCart, setListCart] = useState([]);
   // Here, merge the cart items
   useEffect(() => {
     const updatedCart = [];
@@ -74,12 +76,6 @@ function Header({handleInputChange, logo}) {
     setFetchDatabase2([]);
   };
 
-  // Toggle of login, logout icon state
-  const [icon, setIcon] = useState(
-    <div onClick={()=>{setListCart([]); navigate("/login")}} className='me-3 text-lg inline-block'>
-      <i className="ri-user-add-fill hover:text-red-500"></i>
-    </div>
-  );
   // Motitor the toggle state of login from homePage Component
   useEffect(()=>{
     if (logo) {
