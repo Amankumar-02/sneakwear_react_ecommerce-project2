@@ -24,7 +24,7 @@ const navigate = useNavigate();
     }, [])
 
     //orders
-    const [ordersList, setOrdersList] = useState([])
+    const [ordersList, setOrdersList] = useState([]);
     useEffect(()=>{
         try {
         const getOrders = appwriteService.listOrders()
@@ -78,7 +78,7 @@ const navigate = useNavigate();
               window.location.reload();
             }}
           >
-            <i class="ri-arrow-left-line"></i>Back
+            <i className="ri-arrow-left-line"></i>Back
           </button>
           <NavLink
             // to="/"
@@ -147,6 +147,10 @@ const navigate = useNavigate();
                               </button>
                             </div>
                           </div>
+                          <div className='flex justify-between'>
+                              <p className='text-xs mt-3'>Date <br /> {data.$updatedAt.substring(8, 10)}-{data.$updatedAt.substring(5, 7)}-{data.$updatedAt.substring(0, 4)}</p>
+                              <p className='text-xs mt-3'>Time <br /> {data.$updatedAt.substring(11, 19)}</p>
+                          </div>
                         </div>
                       </section>
                     );
@@ -160,14 +164,6 @@ const navigate = useNavigate();
                 <p className="italic text-white text-center">
                   No Items...
                 </p>
-                {/* <button
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                  className="text-xl bg-black px-4 py-2 rounded-xl hover:bg-transparent text-red-500 hover:border-4 hover:border-white hover:text-white hover:font-semibold"
-                >
-                  Login
-                </button> */}
               </div>
             </>
           )}
@@ -229,6 +225,10 @@ const navigate = useNavigate();
                               </button>
                             </div>
                           </div>
+                          <div className='flex justify-between'>
+                              <p className='text-xs mt-3'>Date <br /> {data.$updatedAt.substring(8, 10)}-{data.$updatedAt.substring(5, 7)}-{data.$updatedAt.substring(0, 4)}</p>
+                              <p className='text-xs mt-3'>Time <br /> {data.$updatedAt.substring(11, 19)}</p>
+                          </div>
                         </div>
                       </section>
                     );
@@ -240,14 +240,6 @@ const navigate = useNavigate();
             <>
               <div className="flex flex-col justify-center items-center my-6">
                 <p className="italic text-white text-center">No Orders...</p>
-                {/* <button
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                  className="text-xl bg-black px-4 py-2 rounded-xl hover:bg-transparent text-red-500 hover:border-4 hover:border-white hover:text-white hover:font-semibold"
-                >
-                  Login
-                </button> */}
               </div>
             </>
           )}
