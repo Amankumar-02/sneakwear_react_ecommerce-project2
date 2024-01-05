@@ -15,21 +15,21 @@ export class Service{
    //database1 // favourite
    async createFav({title, noItems, amount, img, newPrice,}){
     try {
-        return await this.databases.createDocument(config.appwrite_database_id, config.appwrite_collection_id, ID.unique(),  {title, noItems, amount, img, newPrice,})
+        return await this.databases.createDocument(config.appwrite_database_id, config.appwrite_collection_id_favourites, ID.unique(),  {title, noItems, amount, img, newPrice,})
     } catch (error) {
         throw error;
     }
    }
    async deleteFav(id){
     try {
-        await this.databases.deleteDocument(config.appwrite_database_id, config.appwrite_collection_id, id)
+        await this.databases.deleteDocument(config.appwrite_database_id, config.appwrite_collection_id_favourites, id)
     } catch (error) {
         throw error;
     }
    }
    async listFav(){
     try {
-        return await this.databases.listDocuments(config.appwrite_database_id, config.appwrite_collection_id)
+        return await this.databases.listDocuments(config.appwrite_database_id, config.appwrite_collection_id_favourites)
         } catch (error) {
             throw error;
         }
@@ -39,21 +39,21 @@ export class Service{
     //database2 // orders
    async createOrders({title, noItems, amount, img, newPrice,}){
     try {
-        return await this.databases.createDocument(config.appwrite_database_id, config.appwrite_collection_id2, ID.unique(),  {title, noItems, amount, img, newPrice,})
+        return await this.databases.createDocument(config.appwrite_database_id, config.appwrite_collection_id_orders, ID.unique(),  {title, noItems, amount, img, newPrice,})
     } catch (error) {
         throw error;
     }
    }
    async deleteOrders(id){
     try {
-        await this.databases.deleteDocument(config.appwrite_database_id, config.appwrite_collection_id2, id)
+        await this.databases.deleteDocument(config.appwrite_database_id, config.appwrite_collection_id_orders, id)
     } catch (error) {
         throw error;
     }
    }
    async listOrders(){
     try {
-        return await this.databases.listDocuments(config.appwrite_database_id, config.appwrite_collection_id2)
+        return await this.databases.listDocuments(config.appwrite_database_id, config.appwrite_collection_id_orders)
         } catch (error) {
             throw error;
         }

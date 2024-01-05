@@ -73,7 +73,7 @@ function Header({handleInputChange, logo}) {
       toast.error(error.message);
     }
     setListCart([]);
-    setFetchDatabase2([]);
+    setFavDatabase([]);
   };
 
   // Motitor the toggle state of login from homePage Component
@@ -194,8 +194,7 @@ function Header({handleInputChange, logo}) {
 
   return (
     <>
-      <div
-        id="headerWrapper"
+      <div id="headerWrapper"
         className="bg-black text-white pt-[4px] sm:pt-[20px] pb-[8px] px-[20px] sm:px-[40px] sticky lg:sticky top-0 left-0 sm:relative z-50 border-b border-gray-300"
       >
         <div className="navTop flex flex-col sm:flex-row items-center justify-between">
@@ -273,8 +272,7 @@ function Header({handleInputChange, logo}) {
         </div>
       </div>
 
-      <div
-        id="cartHeader"
+      <div id="cartHeader"
         className="cart fixed top-0 w-[300px] bg-[#dadada] border-s border-red-500 h-[100vh] z-[51]"
         style={openCart}
       >
