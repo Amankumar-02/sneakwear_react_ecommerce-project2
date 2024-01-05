@@ -21,56 +21,25 @@ function Header({handleInputChange, logo}) {
 
   // new data
   const storeData = useSelector(state=>state.cart.cart);
-  // console.log(storeData)
 
   const [openCart, setOpenCart] = useState({left:"100%", transition:'0.5s'});
 
+  // this func manage the cart data
+  const processProducts = (source, storeData) => {
+    return source.filter((data) => data.title === storeData)[0] || null;
+  };
+  const cardProductsResult = processProducts(dataBase, storeData);
+  const homeProductsResult = processProducts(productDataCopy, storeData);
+  const sliderProductsResult = processProducts(slideData, storeData);
+
   let [listCart, setListCart] = useState([]);
-
-  // this func is from addCart ==> Cart
-  function cardProducts(dataBase, storeData){
-    let newList = dataBase.filter((data)=>data.title === storeData);
-      if(newList.map((data)=>data.title === storeData)){
-        return newList[0]
-      }
-      return null;
-  }
-  // this func is from addCart ==> Cart Execution
-  let cardProductsResult = cardProducts(dataBase, storeData);
-
-  // this func is from product list from home comp.
-  function homeProducts(productDataCopy, storeData){
-    let newList = productDataCopy.filter((data)=>data.title === storeData);
-      if(newList.map((data)=>data.title === storeData)){
-        return newList[0]
-      }
-      return null;
-  }
-  // this func is from product list from home comp. Execution
-  let homeProductsResult = homeProducts(productDataCopy, storeData);
-
-  // this func is from sliderProducts comp.
-  function sliderProducts(slideData, storeData){
-    let newList = slideData.filter((data)=>data.title === storeData);
-      if(newList.map((data)=>data.title === storeData)){
-        return newList[0]
-      }
-      return null;
-  }
-  // this func is from sliderProducts comp. Execution
-  let sliderProductsResult = sliderProducts(slideData, storeData);
-
   // Here, merge the cart items
   useEffect(() => {
-    if (cardProductsResult) {
-      setListCart((prev) => [...prev, cardProductsResult]);
-    }
-    if (homeProductsResult) {
-      setListCart((prev) => [...prev, homeProductsResult]);
-    }
-    if (sliderProductsResult) {
-      setListCart((prev) => [...prev, sliderProductsResult]);
-    }
+    const updatedCart = [];
+    if (cardProductsResult) updatedCart.push(cardProductsResult);
+    if (homeProductsResult) updatedCart.push(homeProductsResult);
+    if (sliderProductsResult) updatedCart.push(sliderProductsResult);
+    setListCart((prev) => [...prev, ...updatedCart]);
   }, [cardProductsResult, homeProductsResult, sliderProductsResult]);
 
   // Cart Events

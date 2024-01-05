@@ -75,6 +75,7 @@ const navigate = useNavigate();
         <h1
           onClick={() => {
             navigate("/");
+            window.location.reload();
           }}
         >
           SneakWear
