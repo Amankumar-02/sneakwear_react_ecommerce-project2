@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
 import authService from "./appwrite/auth.js";
-// import { useNavigate, Link } from "react-router-dom";
-// import toast from 'react-hot-toast';
 import {Header, Home, Footer} from './components/Index.js';
 import {dataBase} from './dataBase.js';
 import {Card} from './components/AddCart/index.js';
