@@ -1,5 +1,5 @@
 import config from "../config/config";
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import { Client, ID, Databases, Storage } from "appwrite";
 
 export class Service{
     client = new Client()
@@ -12,22 +12,22 @@ export class Service{
         this.databases = new Databases(this.client)
         this.storage = new Storage(this.client)
    }
-   //database1 
-   async createDatabase({title, noItems, amount, img, newPrice,}){
+   //database1 // favourite
+   async createFav({title, noItems, amount, img, newPrice,}){
     try {
         return await this.databases.createDocument(config.appwrite_database_id, config.appwrite_collection_id, ID.unique(),  {title, noItems, amount, img, newPrice,})
     } catch (error) {
         throw error;
     }
    }
-   async deleteDatabase(id){
+   async deleteFav(id){
     try {
         await this.databases.deleteDocument(config.appwrite_database_id, config.appwrite_collection_id, id)
     } catch (error) {
         throw error;
     }
    }
-   async listDatabase(){
+   async listFav(){
     try {
         return await this.databases.listDocuments(config.appwrite_database_id, config.appwrite_collection_id)
         } catch (error) {
@@ -36,22 +36,22 @@ export class Service{
     }
 
 
-    //database2 
-   async createDatabase2({title, noItems, amount, img, newPrice,}){
+    //database2 // orders
+   async createOrders({title, noItems, amount, img, newPrice,}){
     try {
         return await this.databases.createDocument(config.appwrite_database_id, config.appwrite_collection_id2, ID.unique(),  {title, noItems, amount, img, newPrice,})
     } catch (error) {
         throw error;
     }
    }
-   async deleteDatabase2(id){
+   async deleteOrders(id){
     try {
         await this.databases.deleteDocument(config.appwrite_database_id, config.appwrite_collection_id2, id)
     } catch (error) {
         throw error;
     }
    }
-   async listDatabase2(){
+   async listOrders(){
     try {
         return await this.databases.listDocuments(config.appwrite_database_id, config.appwrite_collection_id2)
         } catch (error) {

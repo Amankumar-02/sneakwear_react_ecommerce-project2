@@ -106,14 +106,14 @@ function Header({handleInputChange, logo}) {
     // appwrite database creation of orders
     listCart.map( async(data)=>{
       try{
-        await appwriteService.createDatabase({
+        await appwriteService.createOrders({
           title:data?.title,
           noItems:data?.noItems,
           amount:data?.newPrice2,
           img:data?.img,
           newPrice:data?.newPrice,
         });
-        console.log("cartItem Added To Appwrite");
+        console.log("Ordered Item Added To Appwrite");
         // toast.success("appwrite updated");
       }catch(error){
         console.log(error);
@@ -154,14 +154,14 @@ function Header({handleInputChange, logo}) {
   const addFav = async()=>{
     listCart.map( async(data)=>{
       try{
-        await appwriteService.createDatabase2({
+        await appwriteService.createFav({
           title:data?.title,
           noItems:data?.noItems,
           amount:data?.newPrice2,
           img:data?.img,
           newPrice:data?.newPrice,
         });
-        console.log("cartItem Added To Appwrite");
+        console.log("Favourite Item Added To Appwrite");
         toast.success("Added to Fav.");
         setListCart([]);
       }catch(error){
@@ -171,25 +171,25 @@ function Header({handleInputChange, logo}) {
   }
 
   //this func fetch the fav. database from appwrite
-  const [fetchDatabase2, setFetchDatabase2] = useState([]);
+  const [favDatabase, setFavDatabase] = useState([]);
   useEffect(()=>{
     try {
-    const getOrders = appwriteService.listDatabase2()
-    getOrders.then(res=>{setFetchDatabase2(res.documents)})
+    const getFav = appwriteService.listFav()
+    getFav.then(res=>{setFavDatabase(res.documents)})
     } catch (error) {
-    console.error('Database List failed:', error);
-    setFetchDatabase2([]);
+    console.error('Fav Database List failed:', error);
+    setFavDatabase([]);
     }
   }, [])
 
   // this func filter the appwrite fetched Database according to Login User
-  const [filteredDatabase, setFilteredDataBase] = useState([]);
+  const [filteredFavDatabase, setFilteredFavDataBase] = useState([]);
   useEffect(() => {
-    const filteredData = fetchDatabase2.filter((data) =>
+    const filteredData = favDatabase.filter((data) =>
       data.$permissions[0].slice(11, -2) == userDetails?.$id
     );
-    setFilteredDataBase(filteredData);
-  }, [fetchDatabase2, userDetails]);
+    setFilteredFavDataBase(filteredData);
+  }, [favDatabase, userDetails]);
 
 
   return (
@@ -227,7 +227,7 @@ function Header({handleInputChange, logo}) {
                   <span className="absolute left-[50%] bg-red-500 rounded-lg px-1 text-[10px] leading-4 text-white">
                     {/* {listCart.length} */}
                     {/* {fetchDatabase2.length} */}
-                    {filteredDatabase.length}
+                    {filteredFavDatabase.length}
                   </span>
                 </i>
               </a>

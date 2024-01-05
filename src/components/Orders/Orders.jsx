@@ -21,51 +21,48 @@ const navigate = useNavigate();
         console.log(`Get Data error: `, error)
     }
     }, [])
-    // console.log(userDetails)
 
     //orders
-    const [listCart, setListCart] = useState([])
+    const [ordersList, setOrdersList] = useState([])
     useEffect(()=>{
         try {
-        const getOrders = appwriteService.listDatabase()
-        getOrders.then(res=>{setListCart(res.documents)})
+        const getOrders = appwriteService.listOrders()
+        getOrders.then(res=>{setOrdersList(res.documents)})
         } catch (error) {
-        console.error('Database List failed:', error);
+        console.error('Orders List failed:', error);
         }
     }, [])
-    // console.log(listCart)
 
     //favourites
-    const [listCart2, setListCart2] = useState([])
+    const [favList, setFavList] = useState([])
     useEffect(()=>{
         try {
-        const getOrders = appwriteService.listDatabase2()
-        getOrders.then(res=>{setListCart2(res.documents)})
+        const getFav = appwriteService.listFav()
+        getFav.then(res=>{setFavList(res.documents)})
         } catch (error) {
-        console.error('Database List failed:', error);
+        console.error('Favourite List failed:', error);
         }
     }, [])
-    // console.log(listCart2)
 
     //favourites
-    const removeItem2 = async (id)=>{
+    const removeFav = async (id)=>{
         try {
-        const updateOrders =  await appwriteService.deleteDatabase2(id)
-        updateOrders.then(res=>{setListCart2(res.documents)})
+        const updateFav =  await appwriteService.deleteFav(id)
+        updateFav.then(res=>{setFavList(res.documents)})
         // updatedTodos.then(res=>{console.log(res)})
         } catch (error) {
-        console.log('Database Delete failed:', error)
+        console.log('Favoutite Delete failed:', error)
         }
         window.location.reload();
     }
     //orders
-    const removeItem = async (id)=>{
+    const removeOrders = async (id)=>{
         try {
-        const updateOrders =  await appwriteService.deleteDatabase(id)
-        updateOrders.then(res=>{setListCart(res.documents)})
+        const updateOrders =  await appwriteService.deleteOrders(id)
+        updateOrders.then(res=>{setOrdersList(res.documents)})
         // updatedTodos.then(res=>{console.log(res)})
         } catch (error) {
-        console.log('Database Delete failed:', error)
+        console.log('Order Delete failed:', error)
         }
         window.location.reload();
     }
@@ -82,10 +79,11 @@ const navigate = useNavigate();
         </h1>
         <h2>Your Orders</h2>
       </div>
+      {/* Fav */}
       <div className="flex flex-col items-center justify-center mt-2 sm:mt-[2rem] mx-[2rem]">
         <h1 className="text-3xl font-semibold">Favourites</h1>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
-          {listCart2.map((data, index) => {
+          {favList.map((data, index) => {
             if (userDetails?.$id == data.$permissions[0].slice(11, -2)) {
               return (
                 <section
@@ -118,8 +116,8 @@ const navigate = useNavigate();
                         <button
                           className="bg-red-500 py-1 px-2 text-xs text-white rounded-lg hover:bg-red-600"
                           onClick={() => {
-                            removeItem2(data.$id);
-                            toast.success("Item Removed");
+                            removeFav(data.$id);
+                            toast.success("Fav. Item Removed");
                           }}
                         >
                           Remove
@@ -133,10 +131,11 @@ const navigate = useNavigate();
           })}
         </div>
       </div>
+      {/* Orders */}
       <div className="flex flex-col items-center justify-center mt-2 sm:mt-[2rem] mx-[2rem]">
         <h1 className="text-3xl font-semibold">Previous Orders</h1>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
-          {listCart.map((data, index) => {
+          {ordersList.map((data, index) => {
             if (userDetails?.$id == data.$permissions[0].slice(11, -2)) {
               return (
                 <section
@@ -169,8 +168,8 @@ const navigate = useNavigate();
                         <button
                           className="bg-red-500 py-1 px-2 text-xs text-white rounded-lg hover:bg-red-600"
                           onClick={() => {
-                            removeItem(data.$id);
-                            toast.success("Item Removed");
+                            removeOrders(data.$id);
+                            toast.success("Order Item Removed");
                           }}
                         >
                           Remove
