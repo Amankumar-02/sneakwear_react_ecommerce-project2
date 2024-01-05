@@ -26,10 +26,10 @@ app.post('/api/create-checkout-session', async (req, res) => {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: "http://localhost:5173/success",
-        cancel_url: "http://localhost:5173/cancel",
-        // success_url: "https://sneakwear23.netlify.app/success",
-        // cancel_url: "https://sneakwear23.netlify.app/cancel",
+        // success_url: "http://localhost:5173/success",
+        // cancel_url: "http://localhost:5173/cancel",
+        success_url: "https://sneakwear23.netlify.app/success",
+        cancel_url: "https://sneakwear23.netlify.app/cancel",
     })
     res.json({ id: session.id })
 })

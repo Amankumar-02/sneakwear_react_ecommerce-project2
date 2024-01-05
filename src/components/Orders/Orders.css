@@ -1,0 +1,17 @@
+.progressBar #orderProgressBar{
+    /* background-color: gray; */
+    height: 2px;
+    animation: progressBar 2s linear infinite;
+    margin-bottom: 2px;
+}
+.progressBar2 #orderProgressBar{
+    /* background-color: gray; */
+    height: 2px;
+    animation: progressBar 2s linear infinite;
+    margin-bottom: 2px;
+}
+
+@keyframes progressBar{
+    from {width: 0%;}
+    to {width: 100%;}
+}

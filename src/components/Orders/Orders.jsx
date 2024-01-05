@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import './Orders.css'
 import appwriteService from '../../appwrite/database';
 import toast from "react-hot-toast";
 import authService from '../../appwrite/auth';
@@ -68,7 +69,7 @@ const navigate = useNavigate();
     }
   return (
     <>
-      <div className="flex flex-col bg-gradient-to-b from-gray-900 to-red-500 items-center">
+      <div className="flex flex-col bg-gradient-to-b from-gray-900 to-red-500 items-center min-h-[100vh]">
         <div className="relative w-full flex justify-center items-center mt-6">
           <button
             className="absolute left-5 md:left-10 text-white"
@@ -91,13 +92,17 @@ const navigate = useNavigate();
           </NavLink>
         </div>
         {/* Fav */}
-        <div className="flex flex-col items-center justify-center mt-2 sm:mt-[2rem] mx-[2rem]">
-          <h1 className="text-2xl font-semibold text-gray-300">
+        <div className="flex flex-col items-center justify-center mt-6 sm:my-[2rem] mx-[2rem]">
+          <h1 className="progressBar text-xl font-semibold text-gray-300 relative">
             Favourites List
+            <div
+              id="orderProgressBar"
+              className={`bg-gray-400 absolute bottom-[-10%] left-0 w-full`}
+            ></div>
           </h1>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
-            {userDetails ? (
-              <>
+          {userDetails ? (
+            <>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
                 {favList.map((data, index) => {
                   if (userDetails?.$id == data.$permissions[0].slice(11, -2)) {
                     return (
@@ -147,32 +152,39 @@ const navigate = useNavigate();
                     );
                   }
                 })}
-              </>
-            ) : (
-              <>
-                <p className="text-xl italic text-white text-center">
-                  Please Login First
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col justify-center items-center my-6">
+                <p className="italic text-white text-center">
+                  No Items...
                 </p>
-                <button
+                {/* <button
                   onClick={() => {
                     navigate("/login");
                   }}
                   className="text-xl bg-black px-4 py-2 rounded-xl hover:bg-transparent text-red-500 hover:border-4 hover:border-white hover:text-white hover:font-semibold"
                 >
                   Login
-                </button>
-              </>
-            )}
-          </div>
+                </button> */}
+              </div>
+            </>
+          )}
         </div>
         {/* Orders */}
-        <div className="flex flex-col items-center justify-center mt-2 sm:mt-[2rem] mx-[2rem]">
-          <h1 className="text-3xl font-semibold text-gray-300">
+        <div className="flex flex-col items-center justify-center mt-6 sm:my-[2rem] mx-[2rem]">
+          <h1 className="progressBar2 text-xl font-semibold text-gray-300 relative">
             Placed / Cancelled Orders
+            <div
+              id="orderProgressBar"
+              className={`bg-gray-400 absolute bottom-[-10%] left-0 w-full`}
+            ></div>
           </h1>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
-            {userDetails ? (
-              <>
+
+          {userDetails ? (
+            <>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
                 {ordersList.map((data, index) => {
                   if (userDetails?.$id == data.$permissions[0].slice(11, -2)) {
                     return (
@@ -222,23 +234,23 @@ const navigate = useNavigate();
                     );
                   }
                 })}
-              </>
-            ) : (
-              <>
-                <p className="text-xl italic text-white text-center">
-                  Please Login First
-                </p>
-                <button
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col justify-center items-center my-6">
+                <p className="italic text-white text-center">No Orders...</p>
+                {/* <button
                   onClick={() => {
                     navigate("/login");
                   }}
                   className="text-xl bg-black px-4 py-2 rounded-xl hover:bg-transparent text-red-500 hover:border-4 hover:border-white hover:text-white hover:font-semibold"
                 >
                   Login
-                </button>
-              </>
-            )}
-          </div>
+                </button> */}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

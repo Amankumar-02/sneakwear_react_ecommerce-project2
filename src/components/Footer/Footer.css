@@ -1,4 +1,4 @@
-.fListItem:hover #footerProgressBar{
+.fListItem #footerProgressBar{
     /* background-color: gray; */
     height: 2px;
     animation: progressBar 1s linear infinite;
